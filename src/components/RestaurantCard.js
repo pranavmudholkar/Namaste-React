@@ -2,8 +2,15 @@ import { CDN_URL } from '../utils/constants';
 const RestaurantCard = (props) => {
 	const { resData } = props;
 
-	const { name, cuisines, avgRatingString, slaString, costForTwo } =
-		resData.info;
+	const {
+		name,
+		cuisines,
+		avgRatingString,
+		costForTwo,
+		cloudinaryImageId,
+		sla,
+	} = resData?.info;
+
 	const cuisinesModified = cuisines.map((cuisine) => {
 		return cuisine.charAt(0).toUpperCase() + cuisine.slice(1);
 	});
@@ -15,7 +22,7 @@ const RestaurantCard = (props) => {
 			}}
 		>
 			<img
-				src={CDN_URL + resData.info.cloudinaryImageId}
+				src={CDN_URL + cloudinaryImageId}
 				alt='biryani'
 				className='res-logo'
 			/>
@@ -23,7 +30,7 @@ const RestaurantCard = (props) => {
 			<h3>{name}</h3>
 			<h4>{cuisinesModified.join(', ')}</h4>
 			<h4>{avgRatingString}</h4>
-			<h4>{slaString}</h4>
+			<h4>{sla.slaString}</h4>
 			<h4>{costForTwo}</h4>
 		</div>
 	);

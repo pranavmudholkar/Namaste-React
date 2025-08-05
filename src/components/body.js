@@ -4,16 +4,21 @@ import Shimmer from './shimmer';
 
 const Body = () => {
 	const [listOfRestaurants, setListOfRestaurants] = useState([]);
+	const [filteredRestaurant, setfilteredRestaurant] = useState([]);
 
 	const [searchText, setSearchText] = useState('');
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const data = await fetch(
-				'https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.38430&lng=78.45830&is-seo-homepage-enabled=true&page_type=DESKTOP_'
+				'https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.38430&lng=78.45830&is-seo-homepage-enabled=true&page_type=DESKTOP_'
 			);
 			const json = await data.json();
 			setListOfRestaurants(
+				json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+					?.restaurants
+			);
+			setfilteredRestaurant(
 				json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
 					?.restaurants
 			);
@@ -45,7 +50,7 @@ const Body = () => {
 							const filteredRestaurant = listOfRestaurants.filter((res) =>
 								res.info.name.toLowerCase().includes(searchText.toLowerCase())
 							);
-							setListOfRestaurants(filteredRestaurant);
+							setfilteredRestaurant(filteredRestaurant);
 						}}
 					>
 						Search
@@ -65,7 +70,7 @@ const Body = () => {
 				</button>
 			</div>
 			<div className='res-container'>
-				{listOfRestaurants.map((Restaurant) => (
+				{filteredRestaurant.map((Restaurant) => (
 					<RestaurantCard resData={Restaurant} key={Restaurant.info.id} />
 				))}
 			</div>
