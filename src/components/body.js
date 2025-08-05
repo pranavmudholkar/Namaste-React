@@ -1,4 +1,4 @@
-import RestaurantCard from '../components/RestaurantCard';
+import RestaurantCard from './RestaurantCard';
 import { useState, useEffect } from 'react';
 import Shimmer from './shimmer';
 
@@ -11,7 +11,7 @@ const Body = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const data = await fetch(
-				'https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.38430&lng=78.45830&is-seo-homepage-enabled=true&page_type=DESKTOP_'
+				'https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.38430&lng=78.45830&is-seo-homepage-enabled=true&page_type=DESKTOP_'
 			);
 			const json = await data.json();
 			setListOfRestaurants(
