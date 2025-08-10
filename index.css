@@ -72,3 +72,11 @@
 .filter{
     display: flex;
 }
+
+.res-container a{
+    color: black !important;
+}
+
+.res-container a:visited{
+    color: hsl(240, 91%, 56%) !important;
+}
