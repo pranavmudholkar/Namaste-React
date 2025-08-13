@@ -80,3 +80,8 @@
 .res-container a:visited{
     color: hsl(240, 91%, 56%) !important;
 }
+
+.user-card{
+    padding: 10px;
+    border: 1px solid black;
+}
