@@ -1,34 +1,55 @@
-import { CDN_URL } from '../utils/constants';
+import { useContext } from "react";
+import { CDN_URL } from "../utils/constants";
+import UserContext from "../utils/UserContext";
+
 const RestaurantCard = (props) => {
-	const { resData } = props;
+  const { resData } = props;
+  const { loggedInUser } = useContext(UserContext);
 
-	const {
-		name,
-		cuisines,
-		avgRatingString,
-		costForTwo,
-		cloudinaryImageId,
-		sla,
-	} = resData?.info;
+  const {
+    cloudinaryImageId,
+    name,
+    avgRating,
+    cuisines,
+    costForTwo,
+    deliveryTime,
+  } = resData;
 
-	const cuisinesModified = cuisines.map((cuisine) => {
-		return cuisine.charAt(0).toUpperCase() + cuisine.slice(1);
-	});
-	return (
-		<div className='res-card my-4 mx-1 py-4 px-2 w-[200px] h-130 rounded-lg bg-gray-100 hover:bg-gray-200 '>
-			<img
-				src={CDN_URL + cloudinaryImageId}
-				alt='biryani'
-				className='res-logo w-[218px] h-[180px] rounded-lg'
-			/>
+  return (
+    <div
+      data-testid="resCard"
+      className="m-4 p-4 w-[250px] rounded-lg bg-gray-100 hover:bg-gray-200"
+    >
+      <img
+        className="rounded-lg"
+        alt="res-logo"
+        src={CDN_URL + cloudinaryImageId}
+      />
+      <h3 className="font-bold py-4 text-lg">{name}</h3>
+      <h4>{cuisines.join(", ")}</h4>
+      <h4>{avgRating} stars</h4>
+      <h4>₹{costForTwo / 100} FOR TWO</h4>
+      <h4>{deliveryTime} minutes</h4>
+      <h4>User : {loggedInUser} </h4>
+    </div>
+  );
+};
 
-			<h3 className='font-bold py-4 text-lg'>{name}</h3>
-			<h4 className='py-2 h-20'>{cuisinesModified.join(', ')}</h4>
-			<h4 className='py-2'>{avgRatingString}</h4>
-			<h4 className='py-2'>{sla.slaString}</h4>
-			<h4 className='py-2'>{costForTwo}</h4>
-		</div>
-	);
+// Higher Order Component
+
+// input - RestaurantCard =>> RestaurantCardPromoted
+
+export const withPromtedLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label className="absolute bg-black text-white m-2 p-2 rounded-lg">
+          Promoted
+        </label>
+        <RestaurantCard {...props} />
+      </div>
+    );
+  };
 };
 
 export default RestaurantCard;
